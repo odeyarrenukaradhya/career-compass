@@ -94,10 +94,11 @@ const QuizAttempt = () => {
     });
 
     // Save attempt
+    const studentName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'Student';
     createAttempt({
       quizId: quiz.id,
       studentId: user.id,
-      studentName: user.name,
+      studentName,
       answers,
       score: correctAnswers,
       totalQuestions: quiz.questions.length,
