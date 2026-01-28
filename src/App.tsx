@@ -10,6 +10,10 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Landing from "./pages/Landing";
 import NotFound from "./pages/NotFound";
 
+// Auth Pages
+import StudentLogin from "./pages/auth/StudentLogin";
+import AdminLogin from "./pages/auth/AdminLogin";
+
 // Student Pages
 import StudentDashboard from "./pages/student/Dashboard";
 import StudentQuizzes from "./pages/student/Quizzes";
@@ -42,6 +46,10 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Landing />} />
+            
+            {/* Auth Routes */}
+            <Route path="/auth/student" element={<StudentLogin />} />
+            <Route path="/auth/admin" element={<AdminLogin />} />
             
             {/* Student Routes */}
             <Route path="/student/dashboard" element={
@@ -79,19 +87,19 @@ const App = () => (
             
             {/* Super Admin Routes */}
             <Route path="/super-admin/dashboard" element={
-              <ProtectedRoute allowedRoles={['super-admin']}><SuperAdminDashboard /></ProtectedRoute>
+              <ProtectedRoute allowedRoles={['super_admin']}><SuperAdminDashboard /></ProtectedRoute>
             } />
             <Route path="/super-admin/quizzes" element={
-              <ProtectedRoute allowedRoles={['super-admin']}><SuperAdminQuizzes /></ProtectedRoute>
+              <ProtectedRoute allowedRoles={['super_admin']}><SuperAdminQuizzes /></ProtectedRoute>
             } />
             <Route path="/super-admin/users" element={
-              <ProtectedRoute allowedRoles={['super-admin']}><SuperAdminUsers /></ProtectedRoute>
+              <ProtectedRoute allowedRoles={['super_admin']}><SuperAdminUsers /></ProtectedRoute>
             } />
             <Route path="/super-admin/reports" element={
-              <ProtectedRoute allowedRoles={['super-admin']}><SuperAdminReports /></ProtectedRoute>
+              <ProtectedRoute allowedRoles={['super_admin']}><SuperAdminReports /></ProtectedRoute>
             } />
             <Route path="/super-admin/settings" element={
-              <ProtectedRoute allowedRoles={['super-admin']}><SuperAdminSettings /></ProtectedRoute>
+              <ProtectedRoute allowedRoles={['super_admin']}><SuperAdminSettings /></ProtectedRoute>
             } />
             
             <Route path="*" element={<NotFound />} />

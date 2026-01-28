@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   FileQuestion, 
@@ -8,14 +8,13 @@ import {
   BarChart3, 
   Settings,
   LogOut,
-  BookOpen,
   Trophy,
   Map,
   ChevronLeft,
   ChevronRight,
   Menu
 } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth, UserRole } from '@/contexts/AuthContext';
 import { Logo } from '@/components/Logo';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
@@ -55,18 +54,19 @@ const superAdminNavItems: NavItem[] = [
 ];
 
 export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
-  const { user, logout } = useAuth();
+  const { user, role, signOut } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const getNavItems = (): NavItem[] => {
-    switch (user?.role) {
+    switch (role) {
       case 'student':
         return studentNavItems;
       case 'admin':
         return adminNavItems;
-      case 'super-admin':
+      case 'super_admin':
         return superAdminNavItems;
       default:
         return [];
@@ -76,12 +76,12 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const navItems = getNavItems();
 
   const getRoleBadgeClass = () => {
-    switch (user?.role) {
+    switch (role) {
       case 'student':
         return 'bg-student/10 text-student';
       case 'admin':
         return 'bg-admin/10 text-admin';
-      case 'super-admin':
+      case 'super_admin':
         return 'bg-super-admin/10 text-super-admin';
       default:
         return 'bg-muted text-muted-foreground';
@@ -89,17 +89,24 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   };
 
   const getRoleLabel = () => {
-    switch (user?.role) {
+    switch (role) {
       case 'student':
         return 'Student';
       case 'admin':
         return 'TPO Admin';
-      case 'super-admin':
+      case 'super_admin':
         return 'Super Admin';
       default:
         return 'User';
     }
   };
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate('/');
+  };
+
+  const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User';
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -137,14 +144,14 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         )}>
           {!collapsed ? (
             <div className="space-y-2">
-              <p className="font-semibold text-foreground truncate">{user?.name}</p>
+              <p className="font-semibold text-foreground truncate">{displayName}</p>
               <span className={cn("px-2 py-1 text-xs font-medium rounded-full", getRoleBadgeClass())}>
                 {getRoleLabel()}
               </span>
             </div>
           ) : (
             <div className={cn("w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold", getRoleBadgeClass())}>
-              {user?.name?.charAt(0)}
+              {displayName.charAt(0).toUpperCase()}
             </div>
           )}
         </div>
@@ -181,7 +188,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
               "w-full text-muted-foreground hover:text-destructive hover:bg-destructive/10",
               collapsed ? "px-2 justify-center" : "justify-start"
             )}
-            onClick={logout}
+            onClick={handleLogout}
           >
             <LogOut className="w-5 h-5" />
             {!collapsed && <span className="ml-3">Logout</span>}
@@ -204,10 +211,10 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           
           <div className="flex items-center gap-4 ml-auto">
             <span className="text-sm text-muted-foreground hidden sm:block">
-              Welcome back, <span className="font-medium text-foreground">{user?.name?.split(' ')[0]}</span>
+              Welcome back, <span className="font-medium text-foreground">{displayName.split(' ')[0]}</span>
             </span>
             <div className="w-10 h-10 rounded-full gradient-primary flex items-center justify-center text-primary-foreground font-bold">
-              {user?.name?.charAt(0)}
+              {displayName.charAt(0).toUpperCase()}
             </div>
           </div>
         </header>
