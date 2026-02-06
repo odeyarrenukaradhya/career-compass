@@ -20,6 +20,7 @@ import StudentQuizzes from "./pages/student/Quizzes";
 import QuizAttempt from "./pages/student/QuizAttempt";
 import StudentResults from "./pages/student/Results";
 import StudentCareer from "./pages/student/Career";
+import MockInterview from "./pages/student/MockInterview";
 
 // Admin Pages
 import AdminDashboard from "./pages/admin/Dashboard";
@@ -66,6 +67,9 @@ const App = () => (
             } />
             <Route path="/student/career" element={
               <ProtectedRoute allowedRoles={['student']}><StudentCareer /></ProtectedRoute>
+            } />
+            <Route path="/student/mock-interview" element={
+              <ProtectedRoute allowedRoles={['student']}><MockInterview /></ProtectedRoute>
             } />
             
             {/* Admin Routes */}

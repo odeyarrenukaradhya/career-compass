@@ -10,6 +10,7 @@ import {
   LogOut,
   Trophy,
   Map,
+  Brain,
   ChevronLeft,
   ChevronRight,
   Menu
@@ -35,6 +36,7 @@ const studentNavItems: NavItem[] = [
   { label: 'Quizzes', href: '/student/quizzes', icon: <FileQuestion className="w-5 h-5" /> },
   { label: 'My Results', href: '/student/results', icon: <Trophy className="w-5 h-5" /> },
   { label: 'Career Map', href: '/student/career', icon: <Map className="w-5 h-5" /> },
+  { label: 'Mock Interview', href: '/student/mock-interview', icon: <Brain className="w-5 h-5" /> },
 ];
 
 const adminNavItems: NavItem[] = [
