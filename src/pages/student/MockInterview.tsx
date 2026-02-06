@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import WebcamView from '@/components/WebcamView';
 import {
   Mic, Send, ArrowRight, ArrowLeft, CheckCircle2, Loader2,
   Brain, Target, MessageSquare, Star, Award, RotateCcw
@@ -257,42 +258,52 @@ const MockInterview = () => {
         {/* Phase: Interviewing */}
         {phase === 'interviewing' && questions.length > 0 && (
           <div className="space-y-4">
-            {/* Current question */}
-            <Card className="bg-card border-border">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <Badge variant="secondary">{questions[currentQ].category}</Badge>
-                  <span className="text-sm text-muted-foreground">Q{currentQ + 1}</span>
-                </div>
-                <CardTitle className="text-lg mt-2">
-                  {questions[currentQ].question}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Textarea
-                  placeholder="Type your answer here... Be detailed and professional."
-                  value={answer}
-                  onChange={(e) => setAnswer(e.target.value)}
-                  rows={6}
-                  className="resize-none"
-                  disabled={evaluating}
-                />
-                <div className="flex justify-between items-center">
-                  <p className="text-xs text-muted-foreground">
-                    Tip: Answer as if in a real interview. Be clear, structured, and confident.
-                  </p>
-                  <Button onClick={submitAnswer} disabled={evaluating || !answer.trim()}>
-                    {evaluating ? (
-                      <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Evaluating...</>
-                    ) : currentQ < questions.length - 1 ? (
-                      <>Submit & Next <ArrowRight className="w-4 h-4 ml-2" /></>
-                    ) : (
-                      <>Submit & Finish <CheckCircle2 className="w-4 h-4 ml-2" /></>
-                    )}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="grid md:grid-cols-[1fr_260px] gap-4">
+              {/* Current question */}
+              <Card className="bg-card border-border">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <Badge variant="secondary">{questions[currentQ].category}</Badge>
+                    <span className="text-sm text-muted-foreground">Q{currentQ + 1}</span>
+                  </div>
+                  <CardTitle className="text-lg mt-2">
+                    {questions[currentQ].question}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <Textarea
+                    placeholder="Type your answer here... Be detailed and professional."
+                    value={answer}
+                    onChange={(e) => setAnswer(e.target.value)}
+                    rows={6}
+                    className="resize-none"
+                    disabled={evaluating}
+                  />
+                  <div className="flex justify-between items-center">
+                    <p className="text-xs text-muted-foreground">
+                      Tip: Answer as if in a real interview. Be clear, structured, and confident.
+                    </p>
+                    <Button onClick={submitAnswer} disabled={evaluating || !answer.trim()}>
+                      {evaluating ? (
+                        <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Evaluating...</>
+                      ) : currentQ < questions.length - 1 ? (
+                        <>Submit & Next <ArrowRight className="w-4 h-4 ml-2" /></>
+                      ) : (
+                        <>Submit & Finish <CheckCircle2 className="w-4 h-4 ml-2" /></>
+                      )}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Webcam self-view */}
+              <div className="space-y-2">
+                <WebcamView autoStart className="aspect-[4/3]" />
+                <p className="text-xs text-muted-foreground text-center">
+                  Practice your body language & expressions
+                </p>
+              </div>
+            </div>
 
             {/* Previous answers feedback */}
             {qaEntries.length > 0 && (
