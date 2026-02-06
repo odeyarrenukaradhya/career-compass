@@ -11,7 +11,8 @@ import {
   ArrowRight,
   Clock,
   CheckCircle2,
-  BookOpen
+  BookOpen,
+  Brain
 } from 'lucide-react';
 
 const StudentDashboard = () => {
@@ -88,6 +89,26 @@ const StudentDashboard = () => {
             </Card>
           ))}
         </div>
+
+        {/* Mock Interview CTA */}
+        <Card className="bg-card border-border overflow-hidden">
+          <div className="flex flex-col md:flex-row items-center gap-4 p-6">
+            <div className="w-14 h-14 rounded-2xl gradient-primary flex items-center justify-center shrink-0">
+              <Brain className="w-7 h-7 text-primary-foreground" />
+            </div>
+            <div className="flex-1 text-center md:text-left">
+              <h3 className="text-lg font-semibold text-foreground">AI Mock Interview</h3>
+              <p className="text-sm text-muted-foreground">
+                Practice interviews with AI and get real-time feedback on your answers
+              </p>
+            </div>
+            <Button asChild>
+              <Link to="/student/mock-interview">
+                Start Interview <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </div>
+        </Card>
 
         {/* Available Quizzes */}
         <Card className="bg-card border-border">
