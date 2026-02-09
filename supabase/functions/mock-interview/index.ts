@@ -20,10 +20,11 @@ serve(async (req) => {
     let userPrompt = "";
 
     if (action === "generate_questions") {
-      systemPrompt = `You are a senior technical interviewer. Generate exactly 5 professional interview questions for the domain: "${domain}". 
-Return ONLY a JSON array of objects with "id" (number 1-5), "question" (string), and "category" (string - e.g. "Technical", "Behavioral", "Situational", "Problem Solving"). 
-Questions should range from introductory to advanced. No markdown, no explanation, just the JSON array.`;
-      userPrompt = `Generate 5 interview questions for: ${domain}`;
+      const questionCount = conversation?.questionCount || 12;
+      systemPrompt = `You are a senior technical interviewer. Generate exactly ${questionCount} professional interview questions for the domain: "${domain}". 
+Return ONLY a JSON array of objects with "id" (number 1-${questionCount}), "question" (string), and "category" (string - e.g. "Technical", "Behavioral", "Situational", "Problem Solving", "Communication"). 
+Questions should range from introductory to advanced, mixing technical and behavioral. Keep questions conversational and natural for a voice interview. No markdown, no explanation, just the JSON array.`;
+      userPrompt = `Generate ${questionCount} interview questions for: ${domain}`;
     } else if (action === "evaluate_answer") {
       const { questionIndex, question, answer, allQA } = conversation;
       systemPrompt = `You are a professional interview evaluator. Assess the candidate's answer to an interview question.
