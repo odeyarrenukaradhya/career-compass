@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { 
   FileQuestion, 
   PlusCircle,
+  Sparkles,
   Clock,
   Users,
   Trash2,
@@ -41,12 +42,20 @@ const AdminQuizzes = () => {
               Manage your assessments and view attempt statistics
             </p>
           </div>
-          <Button asChild>
-            <Link to="/admin/quizzes/create">
-              <PlusCircle className="w-4 h-4 mr-2" />
-              Create New Quiz
-            </Link>
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" asChild>
+              <Link to="/admin/quizzes/ai-generate">
+                <Sparkles className="w-4 h-4 mr-2" />
+                AI Generate
+              </Link>
+            </Button>
+            <Button asChild>
+              <Link to="/admin/quizzes/create">
+                <PlusCircle className="w-4 h-4 mr-2" />
+                Create Manually
+              </Link>
+            </Button>
+          </div>
         </div>
 
         {/* Active Quizzes */}

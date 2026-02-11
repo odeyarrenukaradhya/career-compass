@@ -2,3 +2,6 @@ project_id = "esjdpabkhtpcvbrngrws"
 
 [functions.mock-interview]
 verify_jwt = false
+
+[functions.generate-quiz]
+verify_jwt = false
