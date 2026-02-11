@@ -45,18 +45,21 @@ Return ONLY a valid JSON array with this exact structure (no markdown, no extra 
 
 The correctAnswer is the 0-based index of the correct option. Generate exactly ${questionCount} questions.`;
 
-    const response = await fetch("https://esjdpabkhtpcvbrngrws.supabase.co/functions/v1/ai-gateway", {
+    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+
+    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${Deno.env.get("SUPABASE_ANON_KEY")}`,
+        "Authorization": `Bearer ${LOVABLE_API_KEY}`,
       },
       body: JSON.stringify({
         messages: [
           { role: "system", content: "You are a placement exam question generator. Always return valid JSON arrays only, no markdown formatting." },
           { role: "user", content: prompt }
         ],
-        model: "google/gemini-2.5-flash",
+        model: "google/gemini-3-flash-preview",
       }),
     });
 
