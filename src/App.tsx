@@ -26,6 +26,7 @@ import MockInterview from "./pages/student/MockInterview";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminQuizzes from "./pages/admin/Quizzes";
 import CreateQuiz from "./pages/admin/CreateQuiz";
+import AIQuizGenerator from "./pages/admin/AIQuizGenerator";
 import AdminStudents from "./pages/admin/Students";
 import AdminAnalytics from "./pages/admin/Analytics";
 
@@ -81,6 +82,9 @@ const App = () => (
             } />
             <Route path="/admin/quizzes/create" element={
               <ProtectedRoute allowedRoles={['admin']}><CreateQuiz /></ProtectedRoute>
+            } />
+            <Route path="/admin/quizzes/ai-generate" element={
+              <ProtectedRoute allowedRoles={['admin']}><AIQuizGenerator /></ProtectedRoute>
             } />
             <Route path="/admin/students" element={
               <ProtectedRoute allowedRoles={['admin']}><AdminStudents /></ProtectedRoute>
